@@ -1,0 +1,19 @@
+---
+description: .NET naming conventions for classes, methods, fields, and other identifiers
+globs: **/*.cs
+alwaysApply: false
+---
+
+# Naming Conventions
+
+| Type | Style | Example |
+|------|-------|---------|
+| Class, Interface, Record | PascalCase | `UserService`, `IRepository` |
+| Method, Property | PascalCase | `GetUserById`, `FirstName` |
+| Private field | _camelCase | `_userRepository` |
+| Local variable, Parameter | camelCase | `userId`, `firstName` |
+| Constant | PascalCase | `MaxRetryCount` |
+| Interface | Prefix `I` | `IUserService` |
+| Generic Type Parameter | Prefix `T` | `TEntity`, `TResult` |
+| Async Method | Suffix `Async` | `GetUserAsync` |
+| Enum | PascalCase singular | `UserStatus` not `UserStatuses` |

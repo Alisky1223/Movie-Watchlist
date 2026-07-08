@@ -1,0 +1,29 @@
+---
+description: Testing standards for .NET — naming, AAA pattern, and test isolation
+globs: **/*Tests.cs, **/*Specs.cs
+alwaysApply: false
+---
+
+# Testing Standards
+
+- Test method naming: `MethodName_Scenario_ExpectedResult`
+- Follow **AAA** pattern: Arrange / Act / Assert
+- Each test verifies exactly one behavior
+- Use Mock/Stub for external dependencies
+
+```csharp
+[Fact]
+public async Task GetUserAsync_UserNotFound_ThrowsNotFoundException()
+{
+    // Arrange
+    _repoMock.Setup(r => r.FindAsync(99, default)).ReturnsAsync((User?)null);
+
+    // Act
+    var act = () => _sut.GetUserAsync(99);
+
+    // Assert
+    await act.Should().ThrowAsync<UserNotFoundException>();
+}
+```
+
+- Minimum coverage targets: **Unit Tests** for business logic, **Integration Tests** for API endpoints

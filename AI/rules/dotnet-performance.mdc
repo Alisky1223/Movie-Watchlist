@@ -1,0 +1,21 @@
+---
+description: Performance best practices for .NET — collections, strings, EF Core, and memory
+globs: **/*.cs
+alwaysApply: false
+---
+
+# Performance
+
+- Choose collection types deliberately: `IEnumerable` for iteration-only, `IList`/`IReadOnlyList` when count or index access is needed
+- Use `StringBuilder` for string concatenation inside loops
+- Use `Span<T>` and `Memory<T>` for high-frequency operations on arrays/buffers
+- Enable Lazy Loading only where explicitly required
+- Use `AsNoTracking()` for read-only EF Core queries:
+
+```csharp
+// ✅ GOOD — read-only query
+var users = await _db.Users
+    .AsNoTracking()
+    .Where(u => u.IsActive)
+    .ToListAsync(ct);
+```

@@ -1,0 +1,27 @@
+---
+description: Clean code practices for .NET — method size, nesting, and early return patterns
+globs: **/*.cs
+alwaysApply: false
+---
+
+# Clean Code
+
+- Each method has **one responsibility** (SRP)
+- Max method length: **20–30 lines**
+- Max nesting depth: **3 levels**
+- No magic numbers/strings — use constants or enums
+- Use `var` only when the type is obvious from the right-hand side
+- Prefer early return over nested `if`:
+
+```csharp
+// ❌ BAD
+if (user != null)
+{
+    if (user.IsActive)
+    { ... }
+}
+
+// ✅ GOOD
+if (user is null) return;
+if (!user.IsActive) return;
+```

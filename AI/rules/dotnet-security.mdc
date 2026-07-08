@@ -1,0 +1,24 @@
+---
+description: Security standards for .NET — secrets management, input validation, and SQL injection prevention
+globs: **/*.cs
+alwaysApply: false
+---
+
+# Security
+
+- Never store sensitive data in code or `appsettings.json` — use **Secrets Manager / Azure Key Vault / Vault**
+- Always validate user inputs (use FluentValidation or data annotations)
+- Always use **parameterized queries** to prevent SQL Injection:
+
+```csharp
+// ✅ GOOD
+var user = await _db.Users
+    .Where(u => u.Email == email)
+    .FirstOrDefaultAsync(ct);
+
+// ❌ BAD — SQL injection risk
+var user = await _db.Database
+    .SqlQueryRaw<User>($"SELECT * FROM Users WHERE Email = '{email}'");
+```
+
+- Enforce HTTPS everywhere; never allow HTTP in production

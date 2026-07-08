@@ -1,0 +1,84 @@
+---
+description: API Documentation Standards for Inquiry Engine
+globs: "**/Delivery/*Endpoint*.cs"
+alwaysApply: false
+---
+
+# API Documentation Standards
+
+## Rule: Every Endpoint MUST have complete OpenAPI documentation
+
+### Required Attributes for Each Endpoint
+
+```csharp
+.WithName("{ActionName}")              // Unique operation ID
+.WithSummary("{Brief description}")   // Short human-readable description (≤120 chars)
+.WithDescription("{Detailed description}")
+.WithTags("{Category}")                // e.g. "System", "Definitions"
+.Produces<{ResponseType}>(StatusCodes.Status200OK)
+.ProducesProblem(StatusCodes.Status400BadRequest)   // when applicable
+.ProducesProblem(StatusCodes.Status404NotFound)    // when applicable
+.ProducesProblem(StatusCodes.Status500InternalServerError)
+.AllowAnonymous()                      // OR .RequireAuthorization("policy")
+.WithOpenApi(operation => { /* CorrelationId header */ return operation; })
+```
+
+### Error Response Format (RFC 7807 ProblemDetails)
+
+```json
+{
+  "type": "https://tools.ietf.org/html/rfc9110#section-15.5.5",
+  "title": "Not Found",
+  "status": 404,
+  "detail": "The requested resource was not found",
+  "instance": "/api/v1/unknown",
+  "traceId": "00-..."
+}
+```
+
+All error responses include `X-Correlation-Id` response header. Never expose stack traces or sensitive data.
+
+### Response DTO XML Documentation
+
+```csharp
+/// <summary>Response payload description</summary>
+/// <param name="Status">Field description</param>
+public sealed record MyResponse(
+    /// <summary>Field summary</summary>
+    /// <example>Healthy</example>
+    string Status
+);
+```
+
+### CorrelationId Header
+
+Document in every endpoint via `.WithOpenApi()`:
+
+- Header: `X-Correlation-Id`
+- Required: false
+- Pattern: `^[a-zA-Z0-9\-._]+$`, max 128 chars
+- Invalid/missing values → new GUID generated silently
+
+### Standard OpenAPI Tags
+
+| Tag | Purpose |
+|-----|---------|
+| `System` | Health, info, metrics |
+| `Definitions` | Inquiry definition management |
+| `Execution` | Inquiry execution |
+| `Providers` | Provider configuration |
+| `Callbacks` | Callback handling |
+| `Audit` | Audit queries |
+| `Admin` | Administrative operations |
+
+### Checklist Before Marking Endpoint Complete
+
+- [ ] `.WithName()` unique across all endpoints
+- [ ] `.WithSummary()` under 120 characters
+- [ ] `.WithTags()` uses standard tag
+- [ ] Success response documented with `.Produces<T>()`
+- [ ] Error responses documented with `.ProducesProblem()`
+- [ ] Auth documented (`.AllowAnonymous()` or `.RequireAuthorization()`)
+- [ ] DTOs have XML docs with `<summary>` and `<example>`
+- [ ] CorrelationId header documented
+- [ ] Markdown reference updated in `docs/API/`

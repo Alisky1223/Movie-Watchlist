@@ -1,0 +1,24 @@
+---
+description: .NET file and class structure conventions
+globs: **/*.cs
+alwaysApply: false
+---
+
+# File & Class Structure
+
+- One public class per file
+- Class member order: `fields → constructors → properties → public methods → private methods`
+- Remove unused `using` directives
+- `namespace` must match folder structure
+- Use file-scoped namespaces (C# 10+):
+
+```csharp
+// ✅ GOOD
+namespace MyApp.Services;
+
+// ❌ BAD
+namespace MyApp.Services
+{
+    ...
+}
+```

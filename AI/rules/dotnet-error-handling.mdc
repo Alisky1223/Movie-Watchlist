@@ -1,0 +1,23 @@
+---
+description: Error handling standards for .NET — exceptions, Result pattern, and stack trace preservation
+globs: **/*.cs
+alwaysApply: false
+---
+
+# Error Handling
+
+- Catch specific exceptions, not `catch (Exception ex)` globally
+- Never swallow exceptions silently
+- Use `throw;` not `throw ex;` to preserve the stack trace
+- Define domain errors as custom exceptions:
+
+```csharp
+// ✅ GOOD
+public class UserNotFoundException : Exception
+{
+    public UserNotFoundException(int id)
+        : base($"User {id} was not found.") { }
+}
+```
+
+- Use **Result Pattern** or **FluentResults** for predictable/expected failures instead of throwing

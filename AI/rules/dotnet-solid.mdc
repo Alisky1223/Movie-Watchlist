@@ -1,0 +1,27 @@
+---
+description: SOLID principles applied to .NET codebases
+globs: **/*.cs
+alwaysApply: false
+---
+
+# SOLID Principles
+
+- **S** — Single Responsibility: a class should have only one reason to change
+- **O** — Open/Closed: open for extension, closed for modification (use inheritance or composition)
+- **I** — Interface Segregation: prefer small, focused interfaces over large general-purpose ones
+- **D** — Dependency Inversion: depend on abstractions, not concrete implementations
+
+```csharp
+// ✅ Interface Segregation
+public interface IOrderReader { Task<Order> GetAsync(int id); }
+public interface IOrderWriter { Task CreateAsync(Order order); }
+
+// ❌ Fat interface
+public interface IOrderRepository
+{
+    Task<Order> GetAsync(int id);
+    Task CreateAsync(Order order);
+    Task DeleteAsync(int id);
+    Task<IList<Order>> SearchAsync(string query);
+}
+```

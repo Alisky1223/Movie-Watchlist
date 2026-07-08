@@ -1,0 +1,16 @@
+---
+description: Recommended tooling and enforcement setup for .NET projects
+alwaysApply: true
+---
+
+# Tooling & Enforcement
+
+| Tool | Purpose |
+|------|---------|
+| **EditorConfig** | Consistent formatting across editors |
+| **StyleCop / Roslyn Analyzers** | Automated standards checks at build time |
+| **SonarQube / SonarCloud** | Code quality and security scanning |
+| **Husky + lint-staged** | Pre-commit hook to block non-compliant commits |
+| **dotnet format** | Auto-format code on demand |
+
+Run `dotnet format` before every commit. CI pipelines must fail on analyzer warnings.

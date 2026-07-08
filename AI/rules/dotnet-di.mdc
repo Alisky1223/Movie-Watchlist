@@ -1,0 +1,23 @@
+---
+description: Dependency Injection conventions for .NET — constructor injection, lifetimes, and abstractions
+globs: **/*.cs
+alwaysApply: false
+---
+
+# Dependency Injection
+
+- Always inject dependencies through the constructor
+- Never use the ServiceLocator anti-pattern (resolving from container directly)
+- Choose lifetimes deliberately:
+  - `Singleton` → stateless, thread-safe services
+  - `Scoped` → per HTTP request
+  - `Transient` → lightweight, stateless
+- Depend on **abstractions (interfaces)**, not concrete implementations:
+
+```csharp
+// ✅ GOOD
+public class OrderService(IPaymentGateway payment) { }
+
+// ❌ BAD
+public class OrderService(StripePaymentGateway payment) { }
+```

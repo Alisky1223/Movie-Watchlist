@@ -1,0 +1,22 @@
+---
+description: Async/Await best practices for .NET to avoid deadlocks and ensure proper cancellation
+globs: **/*.cs
+alwaysApply: false
+---
+
+# Async / Await
+
+- Never call `.Result` or `.Wait()` on a Task — causes deadlocks
+- All I/O-bound methods must be `async`
+- Use `ConfigureAwait(false)` in library code
+- Always accept and forward `CancellationToken`:
+
+```csharp
+// ✅ GOOD
+public async Task<User> GetUserAsync(int id, CancellationToken ct = default)
+{
+    return await _repo.FindAsync(id, ct).ConfigureAwait(false);
+}
+```
+
+- Avoid `async void` — only allowed for event handlers
