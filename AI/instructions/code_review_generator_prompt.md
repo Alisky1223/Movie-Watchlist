@@ -31,30 +31,47 @@
 این بخش مهم‌ترین قسمت است. باید بر اساس معماری پایه و بهترین رویه‌های جهانی تنظیم شود:
 
 #### الف) انطباق با معماری (Architecture Compliance)
-*   **Screaming Architecture:** بررسی کن که پوشه‌ها و Namespaceها نام دامنه موتور استعلامات را فریاد بزنند. آیا در ساختار فیزیکی پوشه‌ها/پروژه‌ها از prefixهای dot-based مثل `InquiryEngine.Definitions` یا `InquiryEngine.Execution` استفاده شده؟ (باید استفاده نشده باشد؛ پوشه‌ها باید ساده و business-oriented باشند، مثل `Definitions/`, `Execution/`, `Providers/`).
-*   **Vertical Slice:** آیا تمام فایل‌های مربوط به یک فیچر (Endpoint, Orchestrator, Actions, Domain) در همان Slice هستند؟ آیا کدی به لایه‌های دیگر نشت کرده است؟
-*   **Provider Adapter Boundary:** اگر Story با Provider بیرونی، REST/SOAP/GSB/PGSB، Token Pre-call، Callback یا Mapping سروکار دارد، بررسی کن منطق ارتباط بیرونی پشت Adapter/Contract مناسب پنهان شده و مدل اختصاصی Provider به Domain داخلی نشت نکرده باشد.
-*   **ساختار Domain:** آیا داخل هر `Domain/` فقط ۶ پوشه مجاز (`Entities`, `ValueObjects`, `Aggregates`, `Events`, `Services`, `Repositories`) وجود دارد؟ آیا فایلی مستقیماً در ریشه Domain است؟
-*   **الگوی Orchestrator/Actions:** آیا Orchestrator فقط هماهنگی می‌کند و Action ها منطق را انجام می‌دهند؟ آیا SRP در این کلاس‌ها رعایت شده؟
+*   **Screaming Architecture:**
+* بررسی کن که پوشه‌ها و Namespaceها نام دامنه MovieWatchlist را call کنند. آیا در ساختار فیزیکی پوشه‌ها/پروژه‌ها از prefixهای dot-based مثل `MovieWatchlist.Definitions` یا `MovieWatchlist.Execution` استفاده شده؟ (باید استفاده نشده باشد؛ پوشه‌ها باید ساده و business-oriented باشند، مثل `Definitions/`, `Execution/`, `Providers/`).
+*   **Vertical Slice:**
+* آیا تمام فایل‌های مربوط به یک فیچر (Endpoint, Orchestrator, Actions, Domain) در همان Slice هستند؟ آیا کدی به لایه‌های دیگر نشت کرده است؟
+*   **Provider Adapter Boundary:**
+* اگر Story با Provider بیرونی، REST/SOAP/GSB/PGSB، Token Pre-call، Callback یا Mapping سروکار دارد، بررسی کن منطق ارتباط بیرونی پشت Adapter/Contract مناسب پنهان شده و مدل اختصاصی Provider به Domain داخلی نشت نکرده باشد.
+*   **ساختار Domain:**
+* آیا داخل هر `Domain/` فقط ۶ پوشه مجاز (`Entities`, `ValueObjects`, `Aggregates`, `Events`, `Services`, `Repositories`) وجود دارد؟ آیا فایلی مستقیماً در ریشه Domain است؟
+*   **الگوی Orchestrator/Actions:**
+* آیا Orchestrator فقط هماهنگی می‌کند و Action ها منطق را انجام می‌دهند؟ آیا SRP در این کلاس‌ها رعایت شده؟
 
 #### ب) کدنویسی تدافعی و امنیت (Defensive Coding & Security)
-*   **Fast Fail & Validation:** آیا ورودی‌ها در اولین فرصت (Guard Clauses) اعتبارسنجی شده‌اند؟
-*   **Null Handling:** آیا متدهای public مقدار `null` برمی‌گردانند؟ (ممنوع). آیا از `Result<T>` یا الگوهای مشابه استفاده شده؟
-*   **Collection Types:** آیا در API های داخلی از `List<T>` استفاده شده یا باید `IReadOnlyCollection<T>` باشد؟
-**امنیت داده، دسترسی و تست:** بررسی کن هیچ Secret، Credential، Token، Raw Response، Binary Response یا داده واقعی افراد در کد، لاگ، مستندات، exception، تست‌ها یا خروجی عمومی افشا نشده باشد. اگر Story با Raw/Binary Response سروکار دارد، ذخیره‌سازی، نمایش و لاگ آن‌ها باید نقش‌محور، Masked و Audit شده باشد. دسترسی‌ها فقط باید از IAM بیرونی و از طریق contract/claim/policy معتبر کنترل شوند، هیچ IAM داخلی پیاده‌سازی نشده باشد، Principle of Least Privilege رعایت شده باشد.
+*   **Fast Fail & Validation:**
+* آیا ورودی‌ها در اولین فرصت (Guard Clauses) اعتبارسنجی شده‌اند؟
+*   **Null Handling:**
+* آیا متدهای public مقدار `null` برمی‌گردانند؟ (ممنوع). آیا از `Result<T>` یا الگوهای مشابه استفاده شده؟
+*   **Collection Types:**
+* آیا در API های داخلی از `List<T>` استفاده شده یا باید `IReadOnlyCollection<T>` باشد؟
+**امنیت داده، دسترسی و تست:** 
+بررسی کن هیچ Secret، Credential، Token، Raw Response، Binary Response یا داده واقعی افراد در کد، لاگ، مستندات، exception، تست‌ها یا خروجی عمومی افشا نشده باشد. اگر Story با Raw/Binary Response سروکار دارد، ذخیره‌سازی، نمایش و لاگ آن‌ها باید نقش‌محور، Masked و Audit شده باشد. دسترسی‌ها فقط باید از IAM بیرونی و از طریق contract/claim/policy معتبر کنترل شوند، هیچ IAM داخلی پیاده‌سازی نشده باشد، Principle of Least Privilege رعایت شده باشد.
 
-*   **Exception Handling:** آیا خطاهای دامنه‌ای قابل انتظار به Exception تبدیل نشده‌اند و به صورت Result/Error مدل شده‌اند؟
+*   **Exception Handling:**
+* آیا خطاهای دامنه‌ای قابل انتظار به Exception تبدیل نشده‌اند و به صورت Result/Error مدل شده‌اند؟
 
 #### ج) ارتباطات و پارامترها (Inter-function Communication)
-*   **Parameter Constraints:** آیا پارامترهای ورودی توابع از نظر Type و Nullable بودن دقیق هستند؟
-*   **Contracts:** آیا Interface ها در لایه Domain تعریف شده و Implementation در Infrastructure است؟
-*   **Coupling:** آیا وابستگی‌های خارجی (مثل EF Core, HTTP Client) به Domain لیک نکرده‌اند؟
+*   **Parameter Constraints:**
+* آیا پارامترهای ورودی توابع از نظر Type و Nullable بودن دقیق هستند؟
+*   **Contracts:**
+* آیا Interface ها در لایه Domain تعریف شده و Implementation در Infrastructure است؟
+*   **Coupling:**
+* آیا وابستگی‌های خارجی (مثل EF Core, HTTP Client) به Domain لیک نکرده‌اند؟
 
 #### د) متریک‌های جهانی کد (Global Code Metrics)
-*   **Cyclomatic Complexity:** پیچیدگی سیکلوماتیک متدها نباید از 10 تجاوز کند (مگر با توجیه فنی قوی).
-*   **Line of Code:** طول متدها نباید از 30-40 خط تجاوز کند (نشان‌دهنده نقض SRP).
-*   **Nesting Depth:** تودرتویی کد (if/for درون هم) نباید بیشتر از 2 یا 3 سطح باشد.
-*   **Naming:** آیا نام‌ها با Business Domain همخوانی دارند و نه با تکنولوژی؟ (مثلاً `CreateInquiryDefinitionOrchestrator` یا `RunInquiryOrchestrator` و نه `InquiryManager` یا `DataService`).
+*   **Cyclomatic Complexity:**
+* پیچیدگی سیکلوماتیک متدها نباید از 10 تجاوز کند (مگر با توجیه فنی قوی).
+*   **Line of Code:**
+* طول متدها نباید از 30-40 خط تجاوز کند (نشان‌دهنده نقض SRP).
+*   **Nesting Depth:**
+* تودرتویی کد (if/for درون هم) نباید بیشتر از 2 یا 3 سطح باشد.
+*   **Naming:**
+* آیا نام‌ها با Business Domain همخوانی دارند و نه با تکنولوژی؟ (مثلاً `CreateMovieOrchestrator` یا `GetMoviesOrchestrator` و نه `MoiveManager` یا `DataService`).
 
 ### ۴. دستورالعمل اجرای بازبین (Execution Instructions)
 دستورالعملی که به بازبین می‌دهید چگونه کار کند:
@@ -77,8 +94,8 @@ AI/review/[STORY_ID]_[STORY_NAME]/
 مثال:
 
 ```text
-AI/review/US-001_RunInquiry/
-    └── US-001_RunInquiry_code_review_report.md
+AI/review/US-001_AddMovie/
+    └── US-001_AddMovie_code_review_report.md
 ```
 
 ستون‌های جدول:
