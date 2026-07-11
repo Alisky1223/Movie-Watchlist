@@ -9,11 +9,14 @@ namespace Execution.Domain.Entities;
 public sealed class Movie
 {
     public Guid Id { get; private init; }
-    public string Title { get; private set; }
+    public string Title { get; private set; } = string.Empty;
     public MovieGenre Genre { get; private set; }
     public DateTimeOffset CreatedAt { get; private init; }
 
-    private Movie() { } // EF Core
+    private Movie()
+    {
+        Title = string.Empty;
+    } // EF Core
 
     private Movie(Guid id, string title, MovieGenre genre, DateTimeOffset createdAt)
     {

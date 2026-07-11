@@ -7,5 +7,5 @@ public abstract record Error(string Code, string Message)
 {
     public static readonly Error None = new NoError();
 
-    private sealed class NoError() : Error("None", "No error.");
+    private sealed record NoError() : Error("None", "No error.");
 }

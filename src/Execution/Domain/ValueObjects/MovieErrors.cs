@@ -10,3 +10,6 @@ public sealed record MovieAlreadyExistsError(string Title)
 
 public sealed record MovieNotFoundError(Guid Id)
     : Error("MovieNotFound", $"Movie with Id '{Id}' was not found.");
+
+public sealed record MovieValidationError(string Message)
+    : Error("MovieValidation", Message);

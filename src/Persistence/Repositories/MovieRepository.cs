@@ -10,24 +10,31 @@ namespace Persistence.Repositories;
 /// </summary>
 public sealed class MovieRepository : IMovieRepository
 {
+    private readonly MovieWatchlistDbContext _context;
     private readonly DbSet<Movie> _movies;
 
-    public MovieRepository(DbSet<Movie> movies)
+    public MovieRepository(MovieWatchlistDbContext context)
     {
-        _movies = movies;
+        _context = context;
+        _movies = context.Movies;
     }
 
     public async Task<Movie?> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
         return await _movies
             .AsNoTracking()
-            .FirstOrDefaultAsync(m => m.Id == id, ct);
+            .FirstOrDefaultAsync(m => m.Id == id, ct)
+            .ConfigureAwait(false);
     }
 
     public async Task<Movie?> GetByTitleAsync(string title, CancellationToken ct = default)
     {
+        var normalizedTitle = title.Trim().ToLowerInvariant();
+
         return await _movies
-            .FirstOrDefaultAsync(m => m.Title == title, ct);
+            .AsNoTracking()
+            .FirstOrDefaultAsync(m => m.Title.ToLower() == normalizedTitle, ct)
+            .ConfigureAwait(false);
     }
 
     public async Task<IReadOnlyCollection<Movie>> GetPagedAsync(
@@ -38,14 +45,15 @@ public sealed class MovieRepository : IMovieRepository
             .OrderByDescending(m => m.CreatedAt)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
-            .ToListAsync(ct);
+            .ToListAsync(ct)
+            .ConfigureAwait(false);
 
         return items;
     }
 
     public async Task<int> GetTotalCountAsync(CancellationToken ct = default)
     {
-        return await _movies.CountAsync(ct);
+        return await _movies.CountAsync(ct).ConfigureAwait(false);
     }
 
     public void Add(Movie movie)
@@ -56,5 +64,10 @@ public sealed class MovieRepository : IMovieRepository
     public void Remove(Movie movie)
     {
         _movies.Remove(movie);
+    }
+
+    public async Task SaveChangesAsync(CancellationToken ct = default)
+    {
+        await _context.SaveChangesAsync(ct).ConfigureAwait(false);
     }
 }

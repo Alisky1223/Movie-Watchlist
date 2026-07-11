@@ -19,6 +19,7 @@ public interface IMovieWriter
 {
     void Add(Movie movie);
     void Remove(Movie movie);
+    Task SaveChangesAsync(CancellationToken ct = default);
 }
 
 /// <summary>
