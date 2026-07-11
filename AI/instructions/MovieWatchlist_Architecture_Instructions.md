@@ -1,6 +1,6 @@
-<div dir="rtl">
 
-# دستورالعمل دستیار معماری و توسعه موتور استعلامات
+
+# دستورالعمل دستیار معماری و توسعه لیست فیلم های تماشا شده
 
 ## نقش دستیار
 
@@ -17,17 +17,15 @@
 
 ---
 
-## دامنه موتور استعلامات
+## دامنه لیست API فیلم های تماشا شده
 
-موتور استعلامات یک سرویس Backend و API محور است که مسئول تعریف، نسخه‌بندی، اعتبارسنجی، اجرای کنترل‌شده، ثبت سابقه، مدیریت خطا، Audit، Event، Mapping و پایش استعلام‌های بیرونی است.
+لیست فیلم های تماشا شده یک سرویس Backend و API محور است که مسئول تعریف، نسخه‌بندی، اعتبارسنجی، اجرای کنترل‌شده، ثبت سابقه، مدیریت خطا، Audit، Event، Mapping و CRUD مربوط به فیلم های تماشا شده و نمایش آنها است .
 
-این سرویس UI مستقل، پنل جداگانه یا داشبورد اختصاصی تولید نمی‌کند. قابلیت‌های مدیریتی باید از طریق **Admin API** در اختیار پنل مدیریت یکپارچه سامانه قرار بگیرند. سامانه‌های مصرف‌کننده نیز از طریق **Runtime API** با موتور ارتباط می‌گیرند.
+این سرویس UI مستقل، پنل جداگانه یا داشبورد اختصاصی تولید نمی‌کند. قابلیت‌های مدیریتی باید از طریق **Admin API** در اختیار پنل مدیریت یکپارچه سامانه قرار بگیرند. سامانه‌های مصرف‌کننده نیز از طریق **Runtime API**  ارتباط می‌گیرند.
 
 نسخه اول باید از نظر Backend و API الگوهای زیر را پوشش دهد:
 
 - تعریف و مدیریت Provider و Operation
-- تعریف داینامیک استعلام
-- Versioning تعریف استعلام
 - فعال‌سازی کنترل‌شده نسخه معتبر
 - تست قبل از فعال‌سازی با Mock یا Sandbox
 - اجرای Sync و Async
@@ -47,13 +45,13 @@
 
 ---
 
-## موارد خارج از دامنه موتور
+## موارد خارج از دامنه API
 
-موارد زیر داخل موتور استعلامات پیاده‌سازی نمی‌شوند:
+موارد زیر داخل API لیست فیلم های تماشا شده پیاده‌سازی نمی‌شوند:
 
 - UI مستقل
 - پنل گرافیکی جداگانه
-- داشبورد اختصاصی داخل موتور
+- داشبورد اختصاصی داخل API
 - پیاده‌سازی IAM سازمان
 - پیاده‌سازی Central Logging سازمان
 - پیاده‌سازی Message Broker
@@ -64,7 +62,7 @@
 - ذخیره Secret واقعی در کد، مستندات، Repository یا خروجی AI
 - Manual Review / بررسی دستی به‌عنوان قابلیت محصولی، state مستقل، queue مستقل یا flow مستقل
 
-نکته مهم: در این پروژه **بازبینی دستی به‌عنوان قابلیت محصولی موتور در دامنه فعلی وجود ندارد**. بنابراین bounded context، state، queue یا flow مستقل با عنوان Manual Review طراحی نکن.
+نکته مهم: در این پروژه **بازبینی دستی به‌عنوان قابلیت محصولی API در دامنه فعلی وجود ندارد**. بنابراین bounded context، state، queue یا flow مستقل با عنوان Manual Review طراحی نکن.
 
 بازبینی مدیر پروژه یا بازبینی انسانی خروجی‌های توسعه، جزئی از فرآیند انجام کار است و با Manual Review داخل محصول فرق دارد.
 
@@ -75,8 +73,8 @@
 در صورت تعارض بین منابع، ترتیب اعتبار به شکل زیر است:
 
 1. تصمیم‌های صریح و جدید کاربر یا مدیر پروژه
-2. SRS خلاصه نسخه اول موتور استعلامات
-3. SRS تأییدشده موتور استعلامات، فقط در بخش‌هایی که با تصمیم جدید یا SRS خلاصه تعارض ندارد
+2. SRS خلاصه نسخه اول API
+3. SRS تأییدشده API، فقط در بخش‌هایی که با تصمیم جدید یا SRS خلاصه تعارض ندارد
 4. Release 1 Scope
 5. Service Inventory
 6. بکلاگ کلی پروژه
@@ -85,7 +83,7 @@
 9. این فایل معماری
 10. قواعد `AI/rules/`
 
-تصمیم صریح فعلی: **Manual Review / بررسی دستی داخل دامنه محصولی موتور نیست**. اگر در SRS نهایی، SRS خلاصه، بکلاگ یا متن Story اشاره‌ای به بررسی دستی دیده شد، آن اشاره نباید به طراحی bounded context، state، queue، workflow، endpoint یا جدول مستقل برای Manual Review تبدیل شود، مگر اینکه تصمیم جدید و صریحی ثبت شود.
+تصمیم صریح فعلی: **Manual Review / بررسی دستی داخل دامنه محصولی API movie watchlist نیست**. اگر در SRS نهایی، SRS خلاصه، بکلاگ یا متن Story اشاره‌ای به بررسی دستی دیده شد، آن اشاره نباید به طراحی bounded context، state، queue، workflow، endpoint یا جدول مستقل برای Manual Review تبدیل شود، مگر اینکه تصمیم جدید و صریحی ثبت شود.
 
 اگر تعارض جدی و اثرگذار وجود داشت، تولید طراحی یا کد را متوقف کن و سؤال مشخص بپرس. اگر ابهام جزئی بود، با Best Practice ادامه بده و آن را با علامت `⚠ ASSUMPTION` ثبت کن.
 
@@ -93,8 +91,8 @@
 
 ## اصول ثابت پروژه
 
-- موتور استعلامات Backend/API است.
-- UI مستقل در موتور ساخته نمی‌شود.
+- movie watchlist Backend/API است.
+- UI مستقل در API ساخته نمی‌شود.
 - Admin API برای پنل مدیریت یکپارچه است.
 - Runtime API برای سامانه‌های مصرف‌کننده است.
 - Providerهای بیرونی پشت Adapter پنهان می‌شوند.
@@ -104,7 +102,7 @@
 - Mock، Sandbox یا داده مصنوعی باید برای تست استفاده شود.
 - Raw Response و Binary Response داده حساس محسوب می‌شوند.
 - مشاهده Raw/Binary باید نقش‌محور و Audit شده باشد.
-- خطاهای Provider باید به ErrorCode استاندارد موتور تبدیل شوند.
+- خطاهای Provider باید به ErrorCode استاندارد API تبدیل شوند.
 - CorrelationId باید در API، Log، Event، Callback و Worker حفظ شود.
 - تغییرات مهم تعریف، نسخه، اجرا، خطا، Retry، مشاهده داده حساس و Eventهای مهم باید Audit شوند.
 - هر قابلیت باید خروجی قابل بررسی و معیار پذیرش تست‌پذیر داشته باشد.
@@ -116,11 +114,11 @@
 ### bounded contextهای پیشنهادی
 
 - `Definitions`: تعریف Provider، Operation، Versioning و Activation.
-- `Execution`: اجرای استعلام، وضعیت اجرای Sync/Async، Timeout، Retry و نتیجه.
+- `Execution`: اجرای فرمان، وضعیت اجرای Sync/Async، Timeout، Retry و نتیجه.
 - `Callbacks`:
 - دریافت و اتصال Callback به Execution اصلی، مدیریت جریان‌های هدایت و بازگشت مانند هدا.
 - `Mapping`:
-- تبدیل Request/Response بین مدل داخلی موتور و مدل اختصاصی Provider.
+- تبدیل Request/Response بین مدل داخلی API و مدل اختصاصی Provider.
 - `Audit`:
 - ثبت سابقه عملیات مهم، مشاهده داده حساس و رویدادهای قابل پیگیری.
 - `AccessControl`:
@@ -141,7 +139,7 @@
 
 ### ساختار فیزیکی پیشنهادی
 
-از prefixهای dot-based مثل `MoviWatchlist.Definitions` یا `MoviWatchlist.Execution` در ساختار فیزیکی پوشه‌ها استفاده نکن. پوشه‌ها باید ساده، business-oriented و قابل خواندن باشند.
+از prefixهای dot-based مثل `MovieWatchlist.Definitions` یا `MovieWatchlist.Execution` در ساختار فیزیکی پوشه‌ها استفاده نکن. پوشه‌ها باید ساده، business-oriented و قابل خواندن باشند.
 
 ```text
 src/
@@ -157,7 +155,7 @@ src/
     └── SharedKernel/
 ```
 
-- `Persistence/` زیرساخت مشترک EF Core است (`MoviWatchlistDbContext`، `AddMoviWatchlistPersistence`)؛ bounded context دامنه‌ای نیست. فایل‌های Migration در `MoviWatchlist.Migrations` نگه‌داری می‌شوند و API/Worker خودکار migrate نمی‌کنند.
+- `Persistence/` زیرساخت مشترک EF Core است (`MovieWatchlistDbContext`، `AddMovieWatchlistPersistence`)؛ bounded context دامنه‌ای نیست. فایل‌های Migration در `MovieWatchlist.Migrations` نگه‌داری می‌شوند و API/Worker خودکار migrate نمی‌کنند.
 
 ### قوانین bounded context
 
@@ -179,18 +177,18 @@ src/
 ```text
 src/
 ├── Definitions/
-│   ├── CreateMoviWatchlistDefinition/
+│   ├── CreateMovieWatchlistDefinition/
 │   │   ├── Delivery/
-│   │   │   ├── CreateMoviWatchlistDefinitionEndpoint.cs
-│   │   │   ├── CreateMoviWatchlistDefinitionRequest.cs
-│   │   │   ├── CreateMoviWatchlistDefinitionResponse.cs
-│   │   │   └── CreateMoviWatchlistDefinitionValidator.cs
+│   │   │   ├── CreateMovieWatchlistDefinitionEndpoint.cs
+│   │   │   ├── CreateMovieWatchlistDefinitionRequest.cs
+│   │   │   ├── CreateMovieWatchlistDefinitionResponse.cs
+│   │   │   └── CreateMovieWatchlistDefinitionValidator.cs
 │   │   ├── Workflow/
-│   │   │   └── CreateMoviWatchlistDefinitionOrchestrator.cs
+│   │   │   └── CreateMovieWatchlistDefinitionOrchestrator.cs
 │   │   ├── BusinessActions/
 │   │   │   ├── ValidateDefinitionStructureAction.cs
 │   │   │   ├── CheckProviderOperationExistsAction.cs
-│   │   │   ├── CreateMoviWatchlistDefinitionVersionAction.cs
+│   │   │   ├── CreateMovieWatchlistDefinitionVersionAction.cs
 │   │   │   └── WriteDefinitionAuditAction.cs
 │   │   ├── Infrastructure/
 │   │   │   ├── Persistence/
@@ -205,7 +203,7 @@ src/
 │   ├── ActivateDefinition/
 │   └── TestDefinition/
 ├── Execution/
-│   ├── ShowMoviWatchlist/
+│   ├── ShowMovieWatchlist/
 │   ├── GetMovies/
 │   └── RecomendationMoviesList/
 └── SharedKernel/
@@ -297,8 +295,8 @@ orchestrator مسئول هماهنگ‌سازی جریان use case است و ن
 نمونه actionهای معتبر:
 
 - `ValidateDefinitionStructureAction`
-- `CreateMoviWatchlistDefinitionVersionAction`
-- `ActivateMoviWatchlistDefinitionAction`
+- `CreateMovieWatchlistDefinitionVersionAction`
+- `ActivateMovieWatchlistDefinitionAction`
 - `ResolveProviderAdapterAction`
 - `ExecuteTokenPreCallAction`
 - `SendProviderRequestAction`
@@ -354,7 +352,7 @@ orchestrator مسئول هماهنگ‌سازی جریان use case است و ن
 - Dockerfile، docker-compose، env mapping، healthcheck containerها و migration runner جزئی از concernهای زیرساختی هستند.
 - هیچ bounded context نباید مستقیماً به جزئیات Docker وابسته شود.
 - اتصال به Database، RabbitMQ و سایر سرویس‌های بیرونی باید از طریق configuration و abstraction مناسب انجام شود.
-- Migrationها باید از مسیر کنترل‌شده MoviWatchlistMigrations` اجرا شوند، نه به‌صورت پراکنده داخل featureها.
+- Migrationها باید از مسیر کنترل‌شده MovieWatchlistMigrations` اجرا شوند، نه به‌صورت پراکنده داخل featureها.
 
 ---
 
@@ -365,7 +363,7 @@ SRP باید در تمام سطوح اجرا شود: bounded context، slice، �
 ### SRP در سطح bounded context
 
 - هر bounded context باید دقیقاً یک business capability روشن را آدرس دهد.
-- یک context نباید هم‌زمان مالک تعریف استعلام، اجرای استعلام، mapping، access control و observability باشد.
+- یک context نباید هم‌زمان مالک تعریف یک فرمان، اجرای فرمان، mapping، access control و observability باشد.
 - اگر یک context به تغییرات چند دامنه متفاوت حساس شد، boundary آن باید بازبینی شود.
 - اضافه شدن مسئولیت دوم به یک context نشانه لازمیت تقسیم یا انتقال مسئولیت است.
 - Manual Review نباید به‌عنوان context مستقل، قابلیت مستقل یا subdomain جدا ساخته شود.
@@ -393,7 +391,7 @@ SRP باید در تمام سطوح اجرا شود: bounded context، slice، �
 
 ## Defensive Coding
 
-تمام کدها باید defensive نوشته شوند. defensive coding در این پروژه یعنی موتور در برابر ورودی نامعتبر، وضعیت ناسازگار، خطای Provider، Timeout، cancellation، race condition، callback تکراری، null، failure سرویس بیرونی و داده حساس رفتار قابل پیش‌بینی داشته باشد.
+تمام کدها باید defensive نوشته شوند. defensive coding در این پروژه یعنی API در برابر ورودی نامعتبر، وضعیت ناسازگار، خطای Provider، Timeout، cancellation، race condition، callback تکراری، null، failure سرویس بیرونی و داده حساس رفتار قابل پیش‌بینی داشته باشد.
 
 ### Fast Fail
 
@@ -428,9 +426,9 @@ SRP باید در تمام سطوح اجرا شود: bounded context، slice، �
 
 ---
 
-## امنیت موتور استعلامات
+## امنیت Movie Watchlist API
 
-امنیت بخشی از طراحی اصلی موتور است، نه concern جانبی.
+امنیت بخشی از طراحی اصلی API است، نه concern جانبی.
 
 قوانین امنیتی:
 
@@ -452,7 +450,7 @@ SRP باید در تمام سطوح اجرا شود: bounded context، slice، �
 ## قوانین AccessControl
 
 - IAM بیرونی منبع نقش‌ها و مجوزها است.
-- موتور IAM را پیاده‌سازی نمی‌کند.
+- این API, IAM را پیاده‌سازی نمی‌کند.
 - Admin API و Runtime API باید سیاست دسترسی جدا داشته باشند.
 - مسیر Auth سبک فقط برای dev، test و sandbox مجاز است.
 - مسیر Auth سبک نباید در production فعال باشد.
@@ -469,7 +467,7 @@ SRP باید در تمام سطوح اجرا شود: bounded context، slice، �
 - GSB و PGSB transport/route محسوب می‌شوند و مدل داده مستقل تحمیل نمی‌کنند.
 - Token Pre-call باید action مستقل داشته باشد.
 - Credential باید فقط از طریق reference یا secret provider خوانده شود؛ مقدار خام نباید در DB یا log عمومی ذخیره شود.
-- خطاهای Provider باید به ErrorCode استاندارد موتور تبدیل شوند.
+- خطاهای Provider باید به ErrorCode استاندارد API تبدیل شوند.
 - Provider-specific detail نباید به Runtime API نشت کند.
 
 ---
@@ -493,7 +491,7 @@ SRP باید در تمام سطوح اجرا شود: bounded context، slice، �
 - Callback باید idempotent باشد.
 - Callback باید Audit و Log شود.
 - Callback نباید داده حساس را در log افشا کند.
-- جریان‌هایی مثل هدا باید در Backend پشتیبانی شوند، بدون ساخت UI مستقل در موتور.
+- جریان‌هایی مثل هدا باید در Backend پشتیبانی شوند، بدون ساخت UI مستقل در API.
 
 ---
 
@@ -501,7 +499,7 @@ SRP باید در تمام سطوح اجرا شود: bounded context، slice، �
 
 - Mapping باید قبل از فعال‌سازی Definition قابل تست باشد.
 - Mapping باید خطاهای قابل تشخیص و typed تولید کند.
-- Provider response باید به response استاندارد موتور تبدیل شود.
+- Provider response باید به response استاندارد API تبدیل شود.
 - Binary response و Raw response طبق سیاست داده حساس مدیریت می‌شوند.
 - Mapping نباید business decision خارج از مسئولیت خودش بگیرد.
 
@@ -509,16 +507,15 @@ SRP باید در تمام سطوح اجرا شود: bounded context، slice، �
 
 ## قوانین Audit و داده حساس
 
-- تغییر Definition، ایجاد Version، فعال‌سازی Version، اجرای استعلام، خطا، Retry، Callback، مشاهده Raw/Binary و Eventهای مهم باید Audit شوند.
+- تغییر Definition، ایجاد Version، فعال‌سازی Version، اجرای دستورات و فرمان های مربوط به CRUD، خطا، Retry، Callback، مشاهده Raw/Binary و Eventهای مهم باید Audit شوند.
 - Token، Credential، Raw Response، Binary Response، اطلاعات هویتی و داده حساس نباید در log عمومی، exception یا خروجی AI افشا شوند.
 - برای داده حساس از `[MASKED]` استفاده کن.
 - ذخیره Raw Response باید فیلدهای الزامی تأییدشده را پوشش دهد:
   - شناسه درخواست
   - شناسه متقاضی
-  - شناسه استعلام
-  - تاریخ و زمان فراخوانی استعلام
-  - تاریخ و زمان دریافت پاسخ استعلام
-  - مدت زمان دریافت پاسخ استعلام
+  - شناسه انجام دستورات
+  - تاریخ و زمان فراخوانی دستورات
+  - مدت زمان اجرای فرمان و دستورات
   - نتیجه فراخوانی سرویس
 - بازه نگهداری Raw Response در دیتابیس تصمیم باز است و باید در جلسه با سازمان فناوری اطلاعات تعیین شود.
 - خارج از بازه دیتابیس، نگهداری فایل لاگ طبق تصمیم پروژه انجام می‌شود.
@@ -539,19 +536,19 @@ SRP باید در تمام سطوح اجرا شود: bounded context، slice، �
 
 ## نام‌گذاری
 
-### پیشوند `MoviWatchlist.` در نام پروژه‌ها
+### پیشوند `MovieWatchlist.` در نام پروژه‌ها
 
-- در نام پروژه‌ها، فایل‌های `.csproj`، assemblyها، پوشه‌های تست، `ProjectReference` و namespaceهای C# از prefix غیرضروری مثل `MoviWatchlist.Definitions` استفاده نکن، مگر Repository موجود خلاف آن را تثبیت کرده باشد.
+- در نام پروژه‌ها، فایل‌های `.csproj`، assemblyها، پوشه‌های تست، `ProjectReference` و namespaceهای C# از prefix غیرضروری مثل `MovieWatchlist.Definitions` استفاده نکن، مگر Repository موجود خلاف آن را تثبیت کرده باشد.
 - نام پروژه باید همان نام bounded context یا نقش آن باشد؛ مثل `Definitions.csproj`، `Execution.csproj`، `SharedKernel.csproj`، `Architecture.Tests.csproj`.
-- فایل solution ریشه می‌تواند `MoviWatchlist.slnx` باشد.
-- namespaceها باید با مسیر پوشه هم‌راستا باشند؛ مثل `Definitions.CreateMoviWatchlistDefinition.Delivery`، نه `MoviWatchlist.Definitions.CreateMoviWatchlistDefinition.Delivery`، مگر قرارداد Repository خلاف آن را نشان دهد.
+- فایل solution ریشه می‌تواند `MovieWatchlist.slnx` باشد.
+- namespaceها باید با مسیر پوشه هم‌راستا باشند؛ مثل `Definitions.CreateMovieWatchlistDefinition.Delivery`، نه `MovieWatchlist.Definitions.CreateMovieWatchlistDefinition.Delivery`، مگر قرارداد Repository خلاف آن را نشان دهد.
 - پوشه‌های فیزیکی bounded context تحت `src/` از قبل business-oriented هستند و نیاز به prefix سازمانی ندارند.
 
 ### قوانین عمومی نام‌گذاری
 
 - نام bounded contextها باید business-oriented باشد.
 - نام sliceها باید use-case-oriented باشد.
-- نام orchestrator باید با use case هم‌نام باشد؛ مثل `RunMoviWatchlistOrchestrator`.
+- نام orchestrator باید با use case هم‌نام باشد؛ مثل `RunMovieWatchlistOrchestrator`.
 - نام action باید با فعل دقیق دامنه‌ای شروع شود؛ مثل `ValidateDefinitionStructureAction` یا `SendProviderRequestAction`.
 - از نام‌های مبهم مثل `Manager`, `Helper`, `Processor`, `Handler`, `Service` بدون qualifier دامنه‌ای پرهیز کن.
 - اگر استفاده از `Service` ضروری است، نام آن باید مسئولیت روشن داشته باشد؛ مثل `ProviderTokenSigningService` یا `ExecutionTimeoutPolicyService`.
@@ -571,7 +568,7 @@ SRP باید در تمام سطوح اجرا شود: bounded context، slice، �
 5. ریسک‌های SRP، امنیت، defensive coding، داده حساس، observability و testability را اعلام کن.
 6. اگر کد تولید می‌کنی، ساختار فایل‌ها و namespaceها باید با همین معماری سازگار باشد؛ از جمله شش زیرپوشه `Entities`، `ValueObjects`، `Aggregates`، `Events`، `Services` و `Repositories` داخل هر `Domain/`.
 7. اگر ابهام مربوط به scope است، اول Source of Truth را اعمال کن.
-8. اگر موضوع به Manual Review مربوط شد، آن را خارج از دامنه محصولی موتور بدان و از طراحی feature مستقل برای آن خودداری کن.
+8. اگر موضوع به Manual Review مربوط شد، آن را خارج از دامنه محصولی API بدان و از طراحی feature مستقل برای آن خودداری کن.
 9. اگر کار مربوط به طراحی سطح پایین، schema یا endpoint نهایی است، فقط وقتی وارد آن شو که کاربر صریحاً چنین خواسته باشد یا Story آن را مجاز کرده باشد.
 
 در پاسخ‌ها از توضیح اضافه و غیرعملی پرهیز کن. خروجی باید قابل اجرا، قابل بازبینی و قابل تبدیل به کد باشد.
@@ -580,15 +577,15 @@ SRP باید در تمام سطوح اجرا شود: bounded context، slice، �
 
 ## قوانین NuGet و Build
 
-- Solution اصلی پروژه: `MoviWatchlist.slnx`
+- Solution اصلی پروژه: `MovieWatchlist.slnx`
 - پروژه از Central Package Management استفاده می‌کند، مگر خلاف آن در Repository ثابت شود.
 - نسخه پکیج نباید مستقیم در `.csproj` نوشته شود.
 - اگر پکیج NuGet جدید اضافه یا نسخه پکیج تغییر کند:
   1. نسخه در `Directory.Packages.props` ثبت شود.
   2. `PackageReference` بدون `Version` در `.csproj` اضافه شود.
-  3. `dotnet restore MoviWatchlist.slnx --force-evaluate` اجرا شود.
+  3. `dotnet restore MovieWatchlist.slnx --force-evaluate` اجرا شود.
   4. sync آفلاین پکیج‌ها اجرا شود، اگر script پروژه وجود دارد.
-  5. `dotnet build MoviWatchlist.slnx --no-restore` اجرا شود.
+  5. `dotnet build MovieWatchlist.slnx --no-restore` اجرا شود.
   6. lock fileها و پکیج‌های آفلاین تغییرکرده commit شوند.
 - اگر Repository فعلی هنوز script آفلاین ندارد، این موضوع را در خروجی با `⚠ ASSUMPTION` یا `Open Item` ثبت کن و Story را بدون ادعای sync آفلاین Done نکن.
 
@@ -596,7 +593,7 @@ SRP باید در تمام سطوح اجرا شود: bounded context، slice، �
 
 ## ممنوعیت‌ها
 
-- تولید UI مستقل برای موتور ممنوع است.
+- تولید UI مستقل برای API ممنوع است.
 - طراحی Schema نهایی بدون HLD/LLD تأییدشده ممنوع است.
 - نام Endpoint نهایی برای Featureهای اصلی بدون سند طراحی تأییدشده قطعی نشود.
 - تولید کد Production بدون Story، معیار پذیرش و قواعد پروژه ممنوع است.
@@ -604,8 +601,8 @@ SRP باید در تمام سطوح اجرا شود: bounded context، slice، �
 - استفاده از داده واقعی افراد در تست ممنوع است.
 - ایجاد پوشه‌های `Common`, `Utils`, `Helpers` بدون مسئولیت دقیق ممنوع است.
 - افزودن دامنه جدید خارج از SRS و Release 1 ممنوع است.
-- پیاده‌سازی IAM، Central Logging، Message Broker یا Workflow Engine داخل موتور ممنوع است.
-- طراحی Manual Review به‌عنوان قابلیت محصولی موتور در دامنه فعلی ممنوع است.
+- پیاده‌سازی IAM، Central Logging، Message Broker یا Workflow Engine داخل API ممنوع است.
+- طراحی Manual Review به‌عنوان قابلیت محصولی API در دامنه فعلی ممنوع است.
 
 ---
 
@@ -654,7 +651,7 @@ SRP باید در تمام سطوح اجرا شود: bounded context، slice، �
 1. نتیجه را با اصول معماری این سند، SRS خلاصه نسخه اول، تصمیم‌های جدید کاربر و Scope نسخه اول مقایسه کن.
 2. نقاط ضعف احتمالی را در boundary، SRP، defensive coding، امنیت، داده حساس، observability و testability پیدا کن.
 3. راه‌حل را ساده‌تر، امن‌تر و سازگارتر با bounded context و vertical slice کن.
-4. اگر چند گزینه وجود دارد، گزینه‌ای را انتخاب کن که scope را گسترش ندهد و با Backend/API بودن موتور سازگارتر است.
+4. اگر چند گزینه وجود دارد، گزینه‌ای را انتخاب کن که scope را گسترش ندهد و با Backend/API بودن API سازگارتر است.
 5. فقط جمع‌بندی تصمیم‌های مهم، trade-offها، فرض‌ها و ریسک‌های لازم را به کاربر بگو؛ از ارائه جزئیات غیرضروری خودداری کن.
 
 ---
@@ -692,9 +689,11 @@ SRP باید در تمام سطوح اجرا شود: bounded context، slice، �
 - Timeout، Retry، Circuit Breaker و idempotency در صورت نیاز مشخص باشد.
 - تست‌پذیر باشد و تست‌های ضروری آن مشخص یا پیاده‌سازی شده باشند.
 - با SRS خلاصه نسخه اول، تصمیم‌های جدید کاربر و Scope نسخه اول سازگار باشد.
-- UI مستقل، IAM، Central Logging، Message Broker یا Workflow Engine داخل موتور نسازد.
-- Manual Review / بررسی دستی را وارد دامنه محصولی موتور نکند و برای آن context، state، queue، flow، endpoint، table یا workflow مستقل نسازد.
+- UI مستقل، IAM، Central Logging، Message Broker یا Workflow Engine داخل API نسازد.
+- Manual Review / بررسی دستی را وارد دامنه محصولی API نکند و برای آن context، state، queue، flow، endpoint، table یا workflow مستقل نسازد.
 
 اگر هرکدام از این معیارها نقض شد، باید قبل از نهایی‌سازی اصلاح شود یا به‌عنوان ریسک صریح اعلام شود.
 
-</div>
+نکته: درصروت نبودن MovieWatchlist.slnx با نام درست حتما اخطار بده و حتما برای هر فیچر یک .csproject بساز و آن ها را به MovieWatchlist.slnx اضافه کن. نام گذاری این پروژه ها رو هم طبق دستور العمل هایی که بهت داده شده انجام بده
+نکته: میخوام هر فایلی که به پروژه اضافه میکنی رو به MovieWatchlist.slnx هم اضافه کنی
+
