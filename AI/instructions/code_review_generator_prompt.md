@@ -1,4 +1,4 @@
-<div dir="rtl">
+
 
 # دستورالعمل تولید دستورالعمل بررسی کد (Code Review Instruction Generator)
 
@@ -19,12 +19,12 @@
 دستورالعملی که تولید می‌کنید باید شامل بخش‌های زیر به ترتیب باشد:
 
 ### ۱. پروفایل بازبین (Code Reviewer Persona)
-*   نقش: Senior .NET Developer & Inquiry Engine Architecture/Security Reviewer.
+*   نقش: Senior .NET Developer & Movie Watchlist API Architecture/Security Reviewer.
 *   نگرش: سخت‌گیر، دقیق، متمرکز بر امنیت و معماری. هیچ امتیازی برای کدهای "قابل اجرا اما نامرتب" قائل نمی‌شود.
 
 ### ۲. زمینه و دامنه بررسی (Context & Scope)
 *   **استوری هدف:** عنوان و ID استوری را از ورودی استخراج کن.
-*   **دامنه فایل‌ها:** بر اساس چک‌لیست ورودی، دقیقاً مشخص کن کدام فایل‌ها و پوشه‌ها باید بررسی شوند (مثلاً `Definitions/CreateInquiryDefinition/...` یا `Execution/RunInquiry/...`).
+*   **دامنه فایل‌ها:** بر اساس چک‌لیست ورودی، دقیقاً مشخص کن کدام فایل‌ها و پوشه‌ها باید بررسی شوند (مثلاً `Definitions/CreateMovieDefinition/...` یا `Execution/GetMovie/...`).
 *   **تسک‌های هدف:** لیست ID تسک‌ها (مثلاً T-001, T-002) که باید در کد پیاده‌سازی شده باشند را لیست کن.
 
 ### ۳. استانداردها و معیارهای بررسی (Review Standards & Criteria)

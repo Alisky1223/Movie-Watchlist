@@ -1,6 +1,6 @@
-<div dir="rtl">
 
-# PRD to Execution Prompt — موتور استعلامات
+
+# PRD to Execution Prompt — Movie Watchlist API
 
 ## نقش و هدف
 
@@ -42,7 +42,7 @@
 - **No Independent UI:** 
 - این پروژه UI مستقل، پنل جداگانه یا داشبورد اختصاصی تولید نمی‌کند.
 - **No Internal IAM:**
-- موتور IAM را پیاده‌سازی نمی‌کند؛ فقط با IAM بیرونی برای دریافت نقش و مجوز یکپارچه می‌شود.
+-  این برنامه IAM را پیاده‌سازی نمی‌کند؛ فقط با IAM بیرونی برای دریافت نقش و مجوز یکپارچه می‌شود.
 - **No Internal Platform Infrastructure:**
 - این API; Central Logging، Message Broker یا Workflow Engine را پیاده‌سازی نمی‌کند؛ فقط با زیرساخت‌های موجود یکپارچه می‌شود.
 - **No Manual Review Domain:**
@@ -146,7 +146,7 @@ dotnet build MovieWatchlist.slnx --no-restore
 
 ## [شروع پرامپت تولید شده]
 
-**نقش (Role):** شما یک مهندس نرم‌افزار ارشد .NET هستید که یک برنامه پیاده‌سازی دقیق برای موتور استعلامات را اجرا می‌کنید.
+**نقش (Role):** شما یک مهندس نرم‌افزار ارشد .NET هستید که یک برنامه پیاده‌سازی دقیق برای Movie Watch List را اجرا می‌کنید.
 
 **بستر (Context):**
 
@@ -156,8 +156,8 @@ dotnet build MovieWatchlist.slnx --no-restore
 - **وابستگی‌های NuGet جدید یا تغییر نسخه:** [در صورت نیاز؛ نسخه‌ها باید در `Directory.Packages.props` ثبت شوند]
 - **معماری:** رعایت کامل `AI/instructions/MovieWatchlist_Architecture_Instructions.md`
 - **استانداردهای پیاده‌سازی:** قبل از نوشتن هر خط کد، تمام فایل‌های `AI/rules/` را بخوانید و قوانین مرتبط را رعایت کنید. قوانین دارای `alwaysApply: true` همیشه اعمال می‌شوند. قوانین دارای `globs` فقط برای فایل‌های منطبق با همان مسیر یا نوع فایل اعمال می‌شوند.
-- **محدودیت دامنه:** موتور استعلامات Backend/API است و UI مستقل تولید نمی‌کند.
-- **محدودیت Manual Review:** بررسی دستی قابلیت محصولی موتور نیست و نباید برای آن state، queue، endpoint، table، flow یا workflow مستقل ساخته شود.
+- **محدودیت دامنه:** این برنامه یک Backend/API است و UI مستقل تولید نمی‌کند.
+- **محدودیت Manual Review:** بررسی دستی قابلیت محصولی API نیست و نباید برای آن state، queue، endpoint، table، flow یا workflow مستقل ساخته شود.
 - **محدودیت داده واقعی:** تست با داده واقعی افراد مجاز نیست.
 - **محدودیت داده حساس:** Secret، Token، Credential، Raw Response، Binary Response و داده حساس باید mask شوند و در خروجی عمومی نیایند.
 
@@ -190,10 +190,10 @@ AI/prompts/[STORY_ID]_[STORY_NAME]/
 مثال:
 
 ```text
-AI/prompts/US-001_RunInquiry/
-    ├── US-001_RunMoviesList_implementation_plan.md
-    ├── US-001_RunMoviesList_implementation_checklist.md
-    └── US-001_RunMoviesList_final_verification_report.md
+AI/prompts/US-001_GetMovieList/
+    ├── US-001_GetMovieList_implementation_plan.md
+    ├── US-001_GetMovieList_implementation_checklist.md
+    └── US-001_GetMovieList_final_verification_report.md
 ```
 
 ---
@@ -209,7 +209,7 @@ AI/instructions/MovieWatchlist_Architecture_Instructions.md
 اگر وجود ندارد یا کافی نیست، متوقف شوید و این پیام را نمایش دهید:
 
 ```text
-خطا: دستورالعمل معماری موتور استعلامات وجود ندارد یا کافی نیست. لطفاً قبل از ادامه فایل AI/instructions/MovieWatchlist_Architecture_Instructions.md را آماده کنید.
+خطا: دستورالعمل معماری میان برنامه فیلم ها وجود ندارد یا کافی نیست. لطفاً قبل از ادامه فایل AI/instructions/MovieWatchlist_Architecture_Instructions.md را آماده کنید.
 ```
 
 2. وجود پوشه زیر و حداقل یک فایل قانون `.mdc` را بررسی کنید:
@@ -225,11 +225,11 @@ AI/rules/
 ```
 
 3. تمام فایل‌های `AI/rules/*.mdc` را مرور کنید.
-4. فایل معماری موتور را کامل بخوانید و موارد scope، bounded context، vertical slice، Orchestrator/Actions، SRP، defensive coding، امنیت، naming، تست و criteria را استخراج کنید.
+4. فایل معماری API را کامل بخوانید و موارد scope، bounded context، vertical slice، Orchestrator/Actions، SRP، defensive coding، امنیت، naming، تست و criteria را استخراج کنید.
 5. PRD یا Story ورودی را کامل بخوانید.
 6. Scope را با SRS، بکلاگ و تصمیم‌های پروژه تطبیق دهید، اگر در ورودی به آن‌ها ارجاع شده است.
-7. اگر PRD یا Story درخواست UI مستقل، پنل جداگانه، داشبورد اختصاصی، پیاده‌سازی IAM، Central Logging، Message Broker یا Workflow Engine داخل موتور را دارد، متوقف شوید و تعارض دامنه را گزارش کنید.
-8. اگر PRD یا Story درخواست Manual Review به‌عنوان قابلیت محصولی موتور، state مستقل، queue مستقل، workflow مستقل، table مستقل یا endpoint اختصاصی برای بررسی دستی دارد، متوقف شوید و تعارض دامنه را گزارش کنید.
+7. اگر PRD یا Story درخواست UI مستقل، پنل جداگانه، داشبورد اختصاصی، پیاده‌سازی IAM، Central Logging، Message Broker یا Workflow Engine داخل API را دارد، متوقف شوید و تعارض دامنه را گزارش کنید.
+8. اگر PRD یا Story درخواست Manual Review به‌عنوان قابلیت محصولی API، state مستقل، queue مستقل، workflow مستقل، table مستقل یا endpoint اختصاصی برای بررسی دستی دارد، متوقف شوید و تعارض دامنه را گزارش کنید.
 9. اگر PRD یا Story به داده واقعی افراد برای تست وابسته است، متوقف شوید و مسیر Mock/Sandbox یا داده مصنوعی/ناشناس‌سازی‌شده پیشنهاد دهید.
 10. اگر ابهام جزئی و غیر بلوک‌کننده وجود دارد، با Best Practice ادامه دهید و آن را در پلن با `⚠ ASSUMPTION` ثبت کنید.
 11. پوشه Story را طبق الگوی بالا ایجاد کنید.
@@ -382,7 +382,7 @@ DF-XXX: [نام جریان]
   Errors:
 ```
 
-برای موتور استعلامات، حتماً این موارد را در صورت ارتباط با Story بررسی کنید:
+برای Movie Watchlist API، حتماً این موارد را در صورت ارتباط با Story بررسی کنید:
 
 - request مصرف‌کننده از Runtime API
 - request مدیریتی از Admin API
@@ -404,7 +404,7 @@ DF-XXX: [نام جریان]
 ```md
 | File | Purpose | Owner Bounded Context | Owner Slice | Rules |
 |---|---|---|---|---|
-| src/Execution/RunInquiry/Delivery/... | ... | Execution | RunInquiry | dotnet-structure |
+| src/Execution/GetMovieList/Delivery/... | ... | Execution | GetMovieList | dotnet-structure |
 ```
 
 الزامات:
@@ -747,7 +747,7 @@ READY / BLOCKED / NEEDS_REVIEW
 
 ---
 
-# قوانین مخصوص موتور استعلامات
+# قوانین مخصوص Movie Watchlist API
 
 ## Admin API
 
@@ -759,7 +759,7 @@ READY / BLOCKED / NEEDS_REVIEW
 ## Runtime API
 
 - برای سامانه‌های مصرف‌کننده است.
-- باید درخواست اجرای استعلام را دریافت کند.
+- باید درخواست اجرای CRUD را دریافت کند.
 - باید نتیجه یا وضعیت Execution را برگرداند.
 - نباید جزئیات Provider را به مصرف‌کننده نشت دهد.
 - باید CorrelationId را در مسیر اجرا حفظ کند.
@@ -767,7 +767,7 @@ READY / BLOCKED / NEEDS_REVIEW
 ## Provider Adapter
 
 - تفاوت REST، SOAP، GSB، PGSB، Token Pre-call و Callback پشت Adapter مدیریت می‌شود.
-- خطای Provider باید به ErrorCode استاندارد موتور تبدیل شود.
+- خطای Provider باید به ErrorCode استاندارد API تبدیل شود.
 - Credential واقعی نباید در Adapter hardcode شود.
 - GSB و PGSB مسیر ارتباطی هستند و مدل داده مستقل تحمیل نمی‌کنند.
 
@@ -795,7 +795,7 @@ READY / BLOCKED / NEEDS_REVIEW
 
 ## Mapping
 
-- Provider response باید به response استاندارد موتور تبدیل شود.
+- Provider response باید به response استاندارد API تبدیل شود.
 - Mapping نباید business decision خارج از مسئولیت خودش بگیرد.
 - Mapping باید خطای typed تولید کند.
 - Raw/Binary/Sensitive fields باید طبق سیاست masking مدیریت شوند.
@@ -816,10 +816,10 @@ READY / BLOCKED / NEEDS_REVIEW
 
 ## Manual Review
 
-- Manual Review داخل دامنه محصولی موتور نیست.
+- Manual Review داخل دامنه محصولی API نیست.
 - Agent نباید `ManualReviewRequired`، `ManuallyResolved`، `ManualReviewQueue` یا state مشابه ایجاد کند.
 - Agent نباید table، endpoint، queue، bounded context، workflow یا flow مستقل برای Manual Review طراحی کند.
-- بازبینی انسانی خروجی توسعه یا تصمیم مدیریتی پروژه با Manual Review محصولی فرق دارد و نباید وارد مدل دامنه موتور شود.
+- بازبینی انسانی خروجی توسعه یا تصمیم مدیریتی پروژه با Manual Review محصولی فرق دارد و نباید وارد مدل دامنه API شود.
 
 ---
 
@@ -830,5 +830,3 @@ READY / BLOCKED / NEEDS_REVIEW
 پرامپت باید قابل کپی مستقیم در Coding Agent باشد.
 
 ## [پایان پرامپت تولید شده]
-
-</div>
