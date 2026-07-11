@@ -4,7 +4,7 @@
 
 ```
 @AI/instructions/code_review_generator_prompt.md
-@AI/instructions/inquiry_engine_architecture_instructions.md
+@AI/instructions/MovieWatchlist_Architecture_Instructions.md
 @AI/prd/[STORY_SLUG].md
 @AI/prompts/[STORY_SLUG]/[STORY_SLUG]_implementation_checklist.md
 
