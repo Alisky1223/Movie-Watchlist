@@ -2,7 +2,15 @@
 
   <PropertyGroup>
     <RootNamespace>Api</RootNamespace>
+    <UserSecretsId>993804dc-8252-4729-b653-c1717c3e2c89</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 
 
   <ItemGroup>

@@ -26,9 +26,12 @@ builder.Services.AddScoped<DeleteMovieAction>();
 builder.Services.AddScoped<DeleteMovieOrchestrator>();
 builder.Services.AddScoped<GetMoviesOrchestrator>();
 
-builder.Services.AddMovieWatchlistPersistence(
-    builder.Configuration.GetConnectionString("MovieWatchlist")
-    ?? "Server=(localdb)\\mssqllocaldb;Database=MovieWatchlist_Dev;Trusted_Connection=True;TrustServerCertificate=True;");
+var connectionString =
+    builder.Configuration.GetConnectionString("Default")
+    ?? builder.Configuration.GetConnectionString("MovieWatchlist")
+    ?? "Server=(localdb)\\mssqllocaldb;Database=MovieWatchlist_Dev;Trusted_Connection=True;TrustServerCertificate=True;";
+
+builder.Services.AddMovieWatchlistPersistence(connectionString);
 
 var app = builder.Build();
 

@@ -27,11 +27,13 @@ public sealed class MovieWatchlistDbContextFactory : IDesignTimeDbContextFactory
         if (args.Length > 0 && !string.IsNullOrWhiteSpace(args[0]))
             return args[0];
 
-        var env = Environment.GetEnvironmentVariable("ConnectionStrings__MovieWatchlist");
+        var env = Environment.GetEnvironmentVariable("ConnectionStrings__Default")
+            ?? Environment.GetEnvironmentVariable("ConnectionStrings__MovieWatchlist");
+
         if (!string.IsNullOrWhiteSpace(env))
             return env;
 
-        // Fallback for local dev — user should replace this via secret.json or env var
+        // Fallback for local dev — user should replace this via user-secrets or env var
         return "Server=(localdb)\\mssqllocaldb;Database=MovieWatchlist_Dev;Trusted_Connection=True;TrustServerCertificate=True;";
     }
 }
