@@ -1,10 +1,8 @@
-using System.Net;
 using Execution.DeleteMovie.Workflow;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using SharedKernel.Domain.ValueObjects;
 
 namespace Execution.DeleteMovie.Delivery;
 
@@ -15,7 +13,7 @@ public static class DeleteMovieEndpoint
 {
     public static RouteHandlerBuilder Map(IEndpointRouteBuilder app)
     {
-        return app.MapDelete("/movies/{movieId:guid}", async (
+        return app.MapDelete("/deleteMovies/{movieId:guid}", async (
                 Guid movieId,
                 DeleteMovieOrchestrator orchestrator,
                 HttpContext httpContext,

@@ -35,11 +35,11 @@ namespace Execution.Tests
         public Task DisposeAsync() => Task.CompletedTask;
 
         [Fact]
-        public async Task AddMovie_ShouldReturn201AndPersistMovie()
+        public async Task AddMovie_ShouldReturn201AndPersistMovie()// kime
         {
             var request = new { title = "Inception", genre = "SciFi" };
 
-            var response = await _client.PostAsJsonAsync("/movies", request);
+            var response = await _client.PostAsJsonAsync("/addMovies", request);
 
             Assert.Equal(HttpStatusCode.Created, response.StatusCode);
 
@@ -52,10 +52,10 @@ namespace Execution.Tests
         [Fact]
         public async Task GetMovies_ShouldReturnPagedList()
         {
-            var addResponse = await _client.PostAsJsonAsync("/movies", new { title = "The Matrix", genre = "SciFi" });
+            var addResponse = await _client.PostAsJsonAsync("/addMovies", new { title = "The Matrix", genre = "SciFi" });
             addResponse.EnsureSuccessStatusCode();
 
-            var getResponse = await _client.GetAsync("/movies?page=1&pageSize=10");
+            var getResponse = await _client.GetAsync("/getMovies?page=1&pageSize=10");
 
             Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
 
@@ -71,7 +71,7 @@ namespace Execution.Tests
         {
             var request = new { title = "Inception", genre = "SciFi" };
 
-            var response = await _client.PostAsJsonAsync("/movies", request);
+            var response = await _client.PostAsJsonAsync("/addMovies", request);
 
             Assert.Equal(HttpStatusCode.Created, response.StatusCode);
 
@@ -84,9 +84,9 @@ namespace Execution.Tests
         [Fact]
         public async Task AddMovieEndpoint_DuplicateTitle_Returns409Conflict()
         {
-            await _client.PostAsJsonAsync("/movies", new { title = "Duplicate", genre = "SciFi" });
+            await _client.PostAsJsonAsync("/addMovies", new { title = "Duplicate", genre = "SciFi" });
 
-            var response = await _client.PostAsJsonAsync("/movies", new { title = "Duplicate", genre = "SciFi" });
+            var response = await _client.PostAsJsonAsync("/addMovies", new { title = "Duplicate", genre = "SciFi" });
 
             Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
         }
@@ -94,10 +94,10 @@ namespace Execution.Tests
         [Fact]
         public async Task UpdateMovieEndpoint_ExistingMovie_Returns200OkAndUpdatedMovie()
         {
-            var createdResponse = await _client.PostAsJsonAsync("/movies", new { title = "Original", genre = "Drama" });
+            var createdResponse = await _client.PostAsJsonAsync("/addMovies", new { title = "Original", genre = "Drama" });
             var createdBody = await createdResponse.Content.ReadFromJsonAsync<AddMovieResponse>();
 
-            var response = await _client.PutAsJsonAsync($"/movies/{createdBody!.Id}", new { title = "Updated", genre = "Comedy" });
+            var response = await _client.PutAsJsonAsync($"/updateMovies/{createdBody!.Id}", new { title = "Updated", genre = "Comedy" });
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
@@ -105,10 +105,10 @@ namespace Execution.Tests
         [Fact]
         public async Task DeleteMovieEndpoint_ExistingMovie_Returns204NoContent()
         {
-            var createdResponse = await _client.PostAsJsonAsync("/movies", new { title = "Delete Me", genre = "Action" });
+            var createdResponse = await _client.PostAsJsonAsync("/addMovies", new { title = "Delete Me", genre = "Action" });
             var createdBody = await createdResponse.Content.ReadFromJsonAsync<AddMovieResponse>();
 
-            var response = await _client.DeleteAsync($"/movies/{createdBody!.Id}");
+            var response = await _client.DeleteAsync($"/deleteMovies/{createdBody!.Id}");
 
             Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
         }
@@ -116,9 +116,9 @@ namespace Execution.Tests
         [Fact]
         public async Task GetMoviesEndpoint_ValidRequest_Returns200AndPagedPayload()
         {
-            await _client.PostAsJsonAsync("/movies", new { title = "Paged", genre = "SciFi" });
+            await _client.PostAsJsonAsync("/addMovies", new { title = "Paged", genre = "SciFi" });
 
-            var response = await _client.GetAsync("/movies?page=1&pageSize=10");
+            var response = await _client.GetAsync("/getMovies?page=1&pageSize=10");
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 

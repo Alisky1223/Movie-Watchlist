@@ -15,7 +15,7 @@ namespace Execution.AddMovie.Delivery
     {
         public static RouteHandlerBuilder Map(IEndpointRouteBuilder app)
         {
-            return app.MapPost("/movies", async (
+            return app.MapPost("/addMovies", async (
                     AddMovieRequest request,
                     AddMovieOrchestrator orchestrator,
                     HttpContext httpContext,

@@ -1,9 +1,8 @@
-using System.Net;
 using Execution.GetMovies.Workflow;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using System.Net;
 
 namespace Execution.GetMovies.Delivery;
 
@@ -14,7 +13,7 @@ public static class GetMoviesEndpoint
 {
     public static RouteHandlerBuilder Map(IEndpointRouteBuilder app)
     {
-        return app.MapGet("/movies", async (
+        return app.MapGet("/getMovies", async (
                 int? page,
                 int? pageSize,
                 GetMoviesOrchestrator orchestrator,

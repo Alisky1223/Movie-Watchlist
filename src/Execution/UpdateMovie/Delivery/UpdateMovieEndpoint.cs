@@ -1,6 +1,3 @@
-using System.Net;
-using Execution.Domain.ValueObjects;
-using Execution.UpdateMovie.BusinessActions;
 using Execution.UpdateMovie.Domain.ValueObjects;
 using Execution.UpdateMovie.Workflow;
 using Microsoft.AspNetCore.Builder;
@@ -8,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using SharedKernel.Domain.ValueObjects;
+using System.Net;
 
 namespace Execution.UpdateMovie.Delivery;
 
@@ -18,7 +16,7 @@ public static class UpdateMovieEndpoint
 {
     public static RouteHandlerBuilder Map(IEndpointRouteBuilder app)
     {
-        return app.MapPut("/movies/{movieId:guid}", async (
+        return app.MapPut("/updateMovies/{movieId:guid}", async (
                 Guid movieId,
                 UpdateMovieRequest request,
                 UpdateMovieOrchestrator orchestrator,
