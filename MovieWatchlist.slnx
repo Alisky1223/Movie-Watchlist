@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src\Api\Api.csproj" />
+    <Project Path="src\Execution\Execution.csproj" />
+    <Project Path="src\Migrations\Migrations.csproj" />
+    <Project Path="src\Persistence\Persistence.csproj" />
+    <Project Path="src\SharedKernel\SharedKernel.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests\Architecture.Tests\Architecture.Tests.csproj" />
+    <Project Path="tests\Execution.Tests\Execution.Tests.csproj" />
+  </Folder>
+</Solution>

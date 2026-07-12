@@ -1,6 +1,6 @@
-<div dir="rtl">
 
-# PRD to Execution Prompt — موتور استعلامات
+
+# PRD to Execution Prompt — Movie Watchlist API
 
 ## نقش و هدف
 
@@ -8,7 +8,7 @@
 
 پرامپت اجرایی تولیدشده باید Coding Agent را ملزم کند که قبل از طراحی، چک‌لیست و پیاده‌سازی، این منابع را بخواند و رعایت کند:
 
-- `AI/instructions/inquiry_engine_architecture_instructions.md`
+- `AI/instructions/MovieWatchlist_Architecture_Instructions.md`
 - تمام فایل‌های موجود در `AI/rules/`
 - PRD یا Story ورودی
 - SRS خلاصه نسخه اول، SRS نهایی، بکلاگ و تصمیم‌های پروژه، فقط در صورتی که در ورودی به آن‌ها ارجاع شده باشد
@@ -17,25 +17,41 @@
 
 # اصول حاکم بر پرامپت تولیدی
 
-- **Traceability:** هر آیتم پلن و چک‌لیست با شناسه یکتا به PRD یا Story مرتبط باشد. هیچ نیازمندی Story بدون پوشش نماند.
-- **Atomicity:** هر تسک کوچک، مستقل، قابل تست و قابل اتمام در یک حلقه اجرایی باشد.
-- **Dependency-Awareness:** ترتیب اجرا بر اساس وابستگی واقعی و Topological Order باشد، نه ترتیب ظاهری متن.
-- **Vertical Slicing:** هر slice باید end-to-end کار کند، نه لایه‌به‌لایه.
-- **Single Source of Truth:** هر اطلاعات فقط یک‌جا تعریف شود و سایر بخش‌ها با ID به آن رفرنس دهند.
-- **Context Efficiency:** هر فاز یک Artifact مجزا تولید کند تا در فاز بعد فقط مرجع آن بارگذاری شود.
-- **Zero Ambiguity:** خروجی فاز طراحی و چک‌لیست باید آن‌قدر دقیق باشد که اجرا نیاز به استنتاج جدید نداشته باشد.
-- **Autonomous Execution:** ابهامات جزئی با Best Practice، معماری پروژه و قوانین `AI/rules/` حل شوند و با `⚠ ASSUMPTION` ثبت شوند.
-- **Standards Compliance:** همه طراحی‌ها، تسک‌ها و کدها باید با `AI/instructions/inquiry_engine_architecture_instructions.md` و `AI/rules/` منطبق باشند.
-- **Scope Control:** دامنه نباید از SRS، PRD، بکلاگ یا Story ورودی فراتر برود.
-- **No Sensitive Data Leakage:** Secret، Token، Credential، Raw Response، Binary Response و داده واقعی افراد نباید در کد، Log، مستندات یا خروجی AI افشا شود.
-- **No Real Personal Data in Test:** تست با داده واقعی افراد مجاز نیست؛ باید از Mock، Sandbox یا داده مصنوعی/ناشناس‌سازی‌شده استفاده شود.
-- **No Independent UI:** موتور استعلامات UI مستقل، پنل جداگانه یا داشبورد اختصاصی تولید نمی‌کند.
-- **No Internal IAM:** موتور IAM را پیاده‌سازی نمی‌کند؛ فقط با IAM بیرونی برای دریافت نقش و مجوز یکپارچه می‌شود.
-- **No Internal Platform Infrastructure:** موتور Central Logging، Message Broker یا Workflow Engine را پیاده‌سازی نمی‌کند؛ فقط با زیرساخت‌های موجود یکپارچه می‌شود.
-- **No Manual Review Domain:** بررسی دستی داخل دامنه محصولی موتور نیست. Agent نباید برای Manual Review bounded context، state، queue، flow، endpoint، table یا workflow مستقل طراحی کند.
-- **Offline-Ready NuGet:** هر Story که پکیج NuGet جدید اضافه یا نسخه پکیج را تغییر می‌دهد، باید restore، build، lock file و در صورت وجود زیرساخت، feed آفلاین پروژه را هم به‌روز کند.
+- **Traceability:** 
+- هر آیتم پلن و چک‌لیست با شناسه یکتا به PRD یا Story مرتبط باشد. هیچ نیازمندی Story بدون پوشش نماند.
+- **Atomicity:**
+- هر تسک کوچک، مستقل، قابل تست و قابل اتمام در یک حلقه اجرایی باشد.
+- **Dependency-Awareness:**
+- ترتیب اجرا بر اساس وابستگی واقعی و Topological Order باشد، نه ترتیب ظاهری متن.
+- **Vertical Slicing:**
+- هر slice باید end-to-end کار کند، نه لایه‌به‌لایه.
+- **Single Source of Truth:**
+- هر اطلاعات فقط یک‌جا تعریف شود و سایر بخش‌ها با ID به آن رفرنس دهند.
+- **Context Efficiency:**
+- هر فاز یک Artifact مجزا تولید کند تا در فاز بعد فقط مرجع آن بارگذاری شود.
+- **Zero Ambiguity:**
+- خروجی فاز طراحی و چک‌لیست باید آن‌قدر دقیق باشد که اجرا نیاز به استنتاج جدید نداشته باشد.
+- **Autonomous Execution:**
+- ابهامات جزئی با Best Practice، معماری پروژه و قوانین `AI/rules/` حل شوند و با `⚠ ASSUMPTION` ثبت شوند.
+- **Standards Compliance:**
+- همه طراحی‌ها، تسک‌ها و کدها باید با `AI/instructions/MovieWatchlist_Architecture_Instructions.md` و `AI/rules/` منطبق باشند.
+- **Scope Control:**
+- دامنه نباید از SRS، PRD، بکلاگ یا Story ورودی فراتر برود.
+- **No Sensitive Data Leakage:**
+- اطلاعات Secret، Token، Credential، Raw Response، Binary Response و داده واقعی افراد نباید در کد، Log، مستندات یا خروجی AI افشا شود.
+- **No Independent UI:** 
+- این پروژه UI مستقل، پنل جداگانه یا داشبورد اختصاصی تولید نمی‌کند.
+- **No Internal IAM:**
+-  این برنامه IAM را پیاده‌سازی نمی‌کند؛ فقط با IAM بیرونی برای دریافت نقش و مجوز یکپارچه می‌شود.
+- **No Internal Platform Infrastructure:**
+- این API; Central Logging، Message Broker یا Workflow Engine را پیاده‌سازی نمی‌کند؛ فقط با زیرساخت‌های موجود یکپارچه می‌شود.
+- **No Manual Review Domain:**
+- بررسی دستی داخل دامنه محصولی API نیست. Agent نباید برای Manual Review bounded context، state، queue، flow، endpoint، table یا workflow مستقل طراحی کند.
+- **Offline-Ready NuGet:**
+- هر Story که پکیج NuGet جدید اضافه یا نسخه پکیج را تغییر می‌دهد، باید restore، build، lock file و در صورت وجود زیرساخت، feed آفلاین پروژه را هم به‌روز کند.
 
-* **Simple Persian Language:** خروجی باید با فارسی ساده، روشن و واژه‌های رایج نوشته شود. از کلمه‌های سخت، ادبی، قدیمی، ترجمه‌های عجیب یا عبارت‌های سنگین استفاده نشود. اگر یک واژه فنی لازم بود، همان واژه رایج در تیم استفاده شود و در صورت نیاز کوتاه و ساده توضیح داده شود.
+* **Simple Persian Language:**
+* خروجی باید با فارسی ساده، روشن و واژه‌های رایج نوشته شود. از کلمه‌های سخت، ادبی، قدیمی، ترجمه‌های عجیب یا عبارت‌های سنگین استفاده نشود. اگر یک واژه فنی لازم بود، همان واژه رایج در تیم استفاده شود و در صورت نیاز کوتاه و ساده توضیح داده شود.
 
 
 ---
@@ -45,7 +61,7 @@
 پروژه از Solution زیر استفاده می‌کند:
 
 ```text
-InquiryEngine.slnx
+MovieWatchlist.slnx
 ```
 
 پروژه باید بر اساس **Central Package Management** مدیریت شود، مگر خلاف آن در Repository ثابت شود. اگر Story به پکیج NuGet جدید نیاز دارد یا نسخه پکیج را تغییر می‌دهد، Agent باید این مراحل را انجام دهد:
@@ -55,7 +71,7 @@ InquiryEngine.slnx
 3. Restore را با lock evaluation اجرا کند:
 
 ```bash
-dotnet restore InquiryEngine.slnx --force-evaluate
+dotnet restore MovieWatchlist.slnx --force-evaluate
 ```
 
 4. اگر script sync آفلاین در Repository وجود دارد، آن را اجرا کند:
@@ -73,7 +89,7 @@ dotnet restore InquiryEngine.slnx --force-evaluate
 5. Build را اجرا کند:
 
 ```bash
-dotnet build InquiryEngine.slnx --no-restore
+dotnet build MovieWatchlist.slnx --no-restore
 ```
 
 6. موارد زیر را در گزارش نهایی بررسی و ثبت کند:
@@ -111,9 +127,9 @@ dotnet build InquiryEngine.slnx --no-restore
       Acceptance:
         - PackageVersion در Directory.Packages.props ثبت شده است
         - PackageReference بدون Version در csproj ثبت شده است
-        - dotnet restore InquiryEngine.slnx --force-evaluate موفق است
+        - dotnet restore MovieWatchlist.slnx --force-evaluate موفق است
         - اگر sync آفلاین وجود دارد، اجرا شده و پکیج در offline-packages موجود است
-        - dotnet build InquiryEngine.slnx --no-restore بدون خطاست
+        - dotnet build MovieWatchlist.slnx --no-restore بدون خطاست
       Verification:
         - build green
         - packages.lock.jsonهای affected به‌روز شده‌اند
@@ -130,18 +146,18 @@ dotnet build InquiryEngine.slnx --no-restore
 
 ## [شروع پرامپت تولید شده]
 
-**نقش (Role):** شما یک مهندس نرم‌افزار ارشد .NET هستید که یک برنامه پیاده‌سازی دقیق برای موتور استعلامات را اجرا می‌کنید.
+**نقش (Role):** شما یک مهندس نرم‌افزار ارشد .NET هستید که یک برنامه پیاده‌سازی دقیق برای Movie Watch List را اجرا می‌کنید.
 
 **بستر (Context):**
 
 - **خلاصه فنی PRD یا Story:** [خلاصه فشرده فنی — فقط Featureها، منطق بیزینس، محدودیت‌ها و معیارهای پذیرش]
 - **Tech Stack:** [.NET، Minimal API، SQL Server، RabbitMQ و ابزارهای واقعی پروژه، در صورت وجود]
-- **Solution:** `InquiryEngine.slnx`
+- **Solution:** `MovieWatchlist.slnx`
 - **وابستگی‌های NuGet جدید یا تغییر نسخه:** [در صورت نیاز؛ نسخه‌ها باید در `Directory.Packages.props` ثبت شوند]
-- **معماری:** رعایت کامل `AI/instructions/inquiry_engine_architecture_instructions.md`
+- **معماری:** رعایت کامل `AI/instructions/MovieWatchlist_Architecture_Instructions.md`
 - **استانداردهای پیاده‌سازی:** قبل از نوشتن هر خط کد، تمام فایل‌های `AI/rules/` را بخوانید و قوانین مرتبط را رعایت کنید. قوانین دارای `alwaysApply: true` همیشه اعمال می‌شوند. قوانین دارای `globs` فقط برای فایل‌های منطبق با همان مسیر یا نوع فایل اعمال می‌شوند.
-- **محدودیت دامنه:** موتور استعلامات Backend/API است و UI مستقل تولید نمی‌کند.
-- **محدودیت Manual Review:** بررسی دستی قابلیت محصولی موتور نیست و نباید برای آن state، queue، endpoint، table، flow یا workflow مستقل ساخته شود.
+- **محدودیت دامنه:** این برنامه یک Backend/API است و UI مستقل تولید نمی‌کند.
+- **محدودیت Manual Review:** بررسی دستی قابلیت محصولی API نیست و نباید برای آن state، queue، endpoint، table، flow یا workflow مستقل ساخته شود.
 - **محدودیت داده واقعی:** تست با داده واقعی افراد مجاز نیست.
 - **محدودیت داده حساس:** Secret، Token، Credential، Raw Response، Binary Response و داده حساس باید mask شوند و در خروجی عمومی نیایند.
 
@@ -155,7 +171,7 @@ dotnet build InquiryEngine.slnx --no-restore
 4. PRD یا Story ورودی
 5. بکلاگ و برنامه اسپرینت، اگر ارجاع داده شده باشد
 6. ADR/DECهای پروژه، اگر ارجاع داده شده باشد
-7. `AI/instructions/inquiry_engine_architecture_instructions.md`
+7. `AI/instructions/MovieWatchlist_Architecture_Instructions.md`
 8. قواعد `AI/rules/`
 
 اگر تعارض جدی و بلوک‌کننده وجود داشت، اجرا را متوقف کنید و تعارض را دقیق گزارش کنید. اگر ابهام جزئی بود، با Best Practice ادامه دهید و آن را با `⚠ ASSUMPTION` ثبت کنید.
@@ -174,10 +190,10 @@ AI/prompts/[STORY_ID]_[STORY_NAME]/
 مثال:
 
 ```text
-AI/prompts/US-001_RunInquiry/
-    ├── US-001_RunInquiry_implementation_plan.md
-    ├── US-001_RunInquiry_implementation_checklist.md
-    └── US-001_RunInquiry_final_verification_report.md
+AI/prompts/US-001_GetMovieList/
+    ├── US-001_GetMovieList_implementation_plan.md
+    ├── US-001_GetMovieList_implementation_checklist.md
+    └── US-001_GetMovieList_final_verification_report.md
 ```
 
 ---
@@ -187,13 +203,13 @@ AI/prompts/US-001_RunInquiry/
 1. وجود فایل زیر را بررسی کنید:
 
 ```text
-AI/instructions/inquiry_engine_architecture_instructions.md
+AI/instructions/MovieWatchlist_Architecture_Instructions.md
 ```
 
 اگر وجود ندارد یا کافی نیست، متوقف شوید و این پیام را نمایش دهید:
 
 ```text
-خطا: دستورالعمل معماری موتور استعلامات وجود ندارد یا کافی نیست. لطفاً قبل از ادامه فایل AI/instructions/inquiry_engine_architecture_instructions.md را آماده کنید.
+خطا: دستورالعمل معماری میان برنامه فیلم ها وجود ندارد یا کافی نیست. لطفاً قبل از ادامه فایل AI/instructions/MovieWatchlist_Architecture_Instructions.md را آماده کنید.
 ```
 
 2. وجود پوشه زیر و حداقل یک فایل قانون `.mdc` را بررسی کنید:
@@ -209,11 +225,11 @@ AI/rules/
 ```
 
 3. تمام فایل‌های `AI/rules/*.mdc` را مرور کنید.
-4. فایل معماری موتور را کامل بخوانید و موارد scope، bounded context، vertical slice، Orchestrator/Actions، SRP، defensive coding، امنیت، naming، تست و criteria را استخراج کنید.
+4. فایل معماری API را کامل بخوانید و موارد scope، bounded context، vertical slice، Orchestrator/Actions، SRP، defensive coding، امنیت، naming، تست و criteria را استخراج کنید.
 5. PRD یا Story ورودی را کامل بخوانید.
 6. Scope را با SRS، بکلاگ و تصمیم‌های پروژه تطبیق دهید، اگر در ورودی به آن‌ها ارجاع شده است.
-7. اگر PRD یا Story درخواست UI مستقل، پنل جداگانه، داشبورد اختصاصی، پیاده‌سازی IAM، Central Logging، Message Broker یا Workflow Engine داخل موتور را دارد، متوقف شوید و تعارض دامنه را گزارش کنید.
-8. اگر PRD یا Story درخواست Manual Review به‌عنوان قابلیت محصولی موتور، state مستقل، queue مستقل، workflow مستقل، table مستقل یا endpoint اختصاصی برای بررسی دستی دارد، متوقف شوید و تعارض دامنه را گزارش کنید.
+7. اگر PRD یا Story درخواست UI مستقل، پنل جداگانه، داشبورد اختصاصی، پیاده‌سازی IAM، Central Logging، Message Broker یا Workflow Engine داخل API را دارد، متوقف شوید و تعارض دامنه را گزارش کنید.
+8. اگر PRD یا Story درخواست Manual Review به‌عنوان قابلیت محصولی API، state مستقل، queue مستقل، workflow مستقل، table مستقل یا endpoint اختصاصی برای بررسی دستی دارد، متوقف شوید و تعارض دامنه را گزارش کنید.
 9. اگر PRD یا Story به داده واقعی افراد برای تست وابسته است، متوقف شوید و مسیر Mock/Sandbox یا داده مصنوعی/ناشناس‌سازی‌شده پیشنهاد دهید.
 10. اگر ابهام جزئی و غیر بلوک‌کننده وجود دارد، با Best Practice ادامه دهید و آن را در پلن با `⚠ ASSUMPTION` ثبت کنید.
 11. پوشه Story را طبق الگوی بالا ایجاد کنید.
@@ -366,7 +382,7 @@ DF-XXX: [نام جریان]
   Errors:
 ```
 
-برای موتور استعلامات، حتماً این موارد را در صورت ارتباط با Story بررسی کنید:
+برای Movie Watchlist API، حتماً این موارد را در صورت ارتباط با Story بررسی کنید:
 
 - request مصرف‌کننده از Runtime API
 - request مدیریتی از Admin API
@@ -388,12 +404,12 @@ DF-XXX: [نام جریان]
 ```md
 | File | Purpose | Owner Bounded Context | Owner Slice | Rules |
 |---|---|---|---|---|
-| src/Execution/RunInquiry/Delivery/... | ... | Execution | RunInquiry | dotnet-structure |
+| src/Execution/GetMovieList/Delivery/... | ... | Execution | GetMovieList | dotnet-structure |
 ```
 
 الزامات:
 
-- مسیرها باید با `AI/instructions/inquiry_engine_architecture_instructions.md` سازگار باشند.
+- مسیرها باید با `AI/instructions/MovieWatchlist_Architecture_Instructions.md` سازگار باشند.
 - داخل هر slice، پوشه‌های `Delivery/`, `Workflow/`, `BusinessActions/`, `Domain/`, `Infrastructure/` فقط در صورت نیاز استفاده شوند.
 - فایل‌های Domain فقط در یکی از شش زیرپوشه مجاز قرار بگیرند: `Entities/`, `ValueObjects/`, `Aggregates/`, `Events/`, `Services/`, `Repositories/`.
 - پوشه‌های `Common`, `Utils`, `Helpers` یا `Services` عمومی و بی‌مرز ساخته نشوند.
@@ -587,13 +603,13 @@ AI/prompts/[STORY_ID]_[STORY_NAME]/[STORY_ID]_[STORY_NAME]_final_verification_re
    - Restore موفق باشد:
 
 ```bash
-dotnet restore InquiryEngine.slnx --force-evaluate
+dotnet restore MovieWatchlist.slnx --force-evaluate
 ```
 
    - Build کامل موفق باشد:
 
 ```bash
-dotnet build InquiryEngine.slnx --no-restore
+dotnet build MovieWatchlist.slnx --no-restore
 ```
 
    - تست‌های مرتبط pass باشند.
@@ -666,8 +682,8 @@ dotnet build InquiryEngine.slnx --no-restore
 
 | Command | Result | Notes |
 |---|---|---|
-| dotnet restore InquiryEngine.slnx --force-evaluate | ... | ... |
-| dotnet build InquiryEngine.slnx --no-restore | ... | ... |
+| dotnet restore MovieWatchlist.slnx --force-evaluate | ... | ... |
+| dotnet build MovieWatchlist.slnx --no-restore | ... | ... |
 | [test command] | ... | ... |
 
 ## NuGet & Offline Package Check
@@ -731,7 +747,7 @@ READY / BLOCKED / NEEDS_REVIEW
 
 ---
 
-# قوانین مخصوص موتور استعلامات
+# قوانین مخصوص Movie Watchlist API
 
 ## Admin API
 
@@ -743,7 +759,7 @@ READY / BLOCKED / NEEDS_REVIEW
 ## Runtime API
 
 - برای سامانه‌های مصرف‌کننده است.
-- باید درخواست اجرای استعلام را دریافت کند.
+- باید درخواست اجرای CRUD را دریافت کند.
 - باید نتیجه یا وضعیت Execution را برگرداند.
 - نباید جزئیات Provider را به مصرف‌کننده نشت دهد.
 - باید CorrelationId را در مسیر اجرا حفظ کند.
@@ -751,7 +767,7 @@ READY / BLOCKED / NEEDS_REVIEW
 ## Provider Adapter
 
 - تفاوت REST، SOAP، GSB، PGSB، Token Pre-call و Callback پشت Adapter مدیریت می‌شود.
-- خطای Provider باید به ErrorCode استاندارد موتور تبدیل شود.
+- خطای Provider باید به ErrorCode استاندارد API تبدیل شود.
 - Credential واقعی نباید در Adapter hardcode شود.
 - GSB و PGSB مسیر ارتباطی هستند و مدل داده مستقل تحمیل نمی‌کنند.
 
@@ -779,7 +795,7 @@ READY / BLOCKED / NEEDS_REVIEW
 
 ## Mapping
 
-- Provider response باید به response استاندارد موتور تبدیل شود.
+- Provider response باید به response استاندارد API تبدیل شود.
 - Mapping نباید business decision خارج از مسئولیت خودش بگیرد.
 - Mapping باید خطای typed تولید کند.
 - Raw/Binary/Sensitive fields باید طبق سیاست masking مدیریت شوند.
@@ -800,10 +816,10 @@ READY / BLOCKED / NEEDS_REVIEW
 
 ## Manual Review
 
-- Manual Review داخل دامنه محصولی موتور نیست.
+- Manual Review داخل دامنه محصولی API نیست.
 - Agent نباید `ManualReviewRequired`، `ManuallyResolved`، `ManualReviewQueue` یا state مشابه ایجاد کند.
 - Agent نباید table، endpoint، queue، bounded context، workflow یا flow مستقل برای Manual Review طراحی کند.
-- بازبینی انسانی خروجی توسعه یا تصمیم مدیریتی پروژه با Manual Review محصولی فرق دارد و نباید وارد مدل دامنه موتور شود.
+- بازبینی انسانی خروجی توسعه یا تصمیم مدیریتی پروژه با Manual Review محصولی فرق دارد و نباید وارد مدل دامنه API شود.
 
 ---
 
@@ -814,5 +830,3 @@ READY / BLOCKED / NEEDS_REVIEW
 پرامپت باید قابل کپی مستقیم در Coding Agent باشد.
 
 ## [پایان پرامپت تولید شده]
-
-</div>

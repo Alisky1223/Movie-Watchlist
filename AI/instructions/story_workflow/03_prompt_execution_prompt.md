@@ -1,7 +1,7 @@
 # مرحله ۳ — پیاده‌سازی
 
 ```
-@AI/instructions/inquiry_engine_architecture_instructions.md
+@AI/instructions/MovieWatchlist_Architecture_Instructions.md
 @AI/instructions/prd_to_execution_prompt.md
 @AI/rules/
 @AI/prd/[STORY_SLUG].md
